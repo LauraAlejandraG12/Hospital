@@ -1,6 +1,11 @@
 package clases;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import clases_empleado.*;
+
 
 public class ModeloDatos {
 
@@ -35,4 +40,44 @@ public class ModeloDatos {
         medicosMap.put(miMedico.getNumeroDeDNI(), miMedico);
         System.out.println("Se ha registrado el médico " + miMedico.getNombre() + " satisfactoriamente");
     }
+
+
+    public void imprimirPacientes(){
+        String msj="PACIENTES REGISTRADOS\n";
+        Iterator<String> iterator = pacientesMap.keySet().iterator();
+
+        while(iterator.hasNext()){
+            String clave = iterator.next();
+            pacientesMap.get(clave).imprimirDatosPersona(msj);
+        }
+    }
+
+    public void imprimirEmpleadosEventuales(){
+        String msj="EMPLEADOS EVENTUALES REGISTRADOS\n";
+
+        for(String clave : empleadosEventualMap.keySet()){
+            empleadosEventualMap.get(clave).imprimirDatosPersona(msj);
+        }
+    }
+
+
+    public void imprimirEmpleadosPorPlanilla(){
+        String msj = "EMPLEADOS POR PLANILLA REGISTRADOS\n";
+
+        for(EmpleadoPlanilla empleadoPlanilla : empleadosPlanillaMap.values()){
+            empleadoPlanilla.imprimirDatosPersona(msj);
+        }
+    }
+
+
+    public void imprimirMedicos(){
+        String msj = "MEDICOS REGISTRADOS\n";
+
+        for(Map.Entry<String, Medico> elemento : medicosMap.entrySet()){
+            // System.out.println("key = " + elemento.getKey() + ", Value = " + elemento.getValue());
+            // medicosMap.get(elemento.getKey()).imprimirDatosPersona(msj);
+            elemento.getValue().imprimirDatosPersona(msj);
+        }
+    }
+
 }

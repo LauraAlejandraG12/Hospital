@@ -71,5 +71,30 @@ public class Paciente extends Persona{
 
             }
         }
+
+
+
+
+        @Override
+
+        public void imprimirDatosPersona(String datos){
+            super.imprimirDatosPersona(datos);
+
+            datos = "Numero Historia Clinica" + numeroHistoriaClinica + "\n";
+            datos += "Sexo: " + sexo + "\n";
+            datos += "Grupo sanguineo: " + grupoSanguineo + "\n";
+
+            if(listaMedicamentosAlergico.size()>0){
+                datos += "Lista medicamentos a los que es alergico\n";
+
+                for(int i = 0; i < listaMedicamentosAlergico.size(); i++){
+                    datos+= "\t" + listaMedicamentosAlergico.get(i)+ "\n";
+                }
+            } else{
+                datos += "El paciente no es alergico a ningun medicamento";
+            }
+
+            System.out.println(datos);
+        }
     }
 

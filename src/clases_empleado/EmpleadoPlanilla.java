@@ -1,11 +1,13 @@
-package clases.empleado;
+package clases_empleado;
+
+import javax.swing.JOptionPane;
 
 public class EmpleadoPlanilla extends Empleado {
     
     private double salarioMensual;
     private double porcentajeAdicionalPorHoraExtra;
 
-    public double getSalarioMensual(){
+    public double  getSalarioMensual(){
         return salarioMensual;
     }
 
@@ -21,17 +23,25 @@ public class EmpleadoPlanilla extends Empleado {
         this.porcentajeAdicionalPorHoraExtra = porcentajeAdicionalPorHoraExtra;
     }
 
-    @override
+    @Override
 
     public void registrarDatos(){
         super.registrarDatos();
 
-        salarioMensual = Double.parseInt(JOptionPane.showInputDialog("Ingrese el salario mensual"));
+        salarioMensual = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el salario mensual"));
         porcentajeAdicionalPorHoraExtra = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el porcentaje adicional por ahora extra"));
     }
 
 
-    public double getSalarioMensual(){
-        
+    public void imprimirDatosPersona(String datos){
+        super.imprimirDatosPersona(datos);
+
+        datos = "Salario Mensual: " + salarioMensual + "\n";
+        datos += "Porcentaje adicional por hora extra: " + porcentajeAdicionalPorHoraExtra + "\n";
+
+        System.out.println(datos);
     }
+
+
+    
 }

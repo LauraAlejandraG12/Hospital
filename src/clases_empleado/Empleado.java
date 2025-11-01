@@ -1,8 +1,11 @@
-package clases.empleado;
+package clases_empleado;
+
+import javax.swing.JOptionPane;
 
 import clases.Persona;
 
 public class Empleado extends Persona{
+
     private String codigoDeEmpleado;
     private int numeroDeHorasExtras;
     private String fechaDeIngreso;
@@ -22,7 +25,7 @@ public class Empleado extends Persona{
     }
 
     public void setNumeroDeHorasExtras(int numeroDeHorasExtras){
-        this.numeroDehorasExtras = numeroDeHorasExtras;
+        this.numeroDeHorasExtras = numeroDeHorasExtras;
     }
 
     public String getFechaDeIngreso(){
@@ -50,8 +53,8 @@ public class Empleado extends Persona{
     }
 
 
-    @override 
-    public void registrarDatos();
+    @Override 
+    public void registrarDatos() {
     super.registrarDatos();
 
     codigoDeEmpleado = JOptionPane.showInputDialog("Ingrese el codigo del empleado");
@@ -60,4 +63,18 @@ public class Empleado extends Persona{
     area =JOptionPane.showInputDialog("Ingrese el area");
     cargo = JOptionPane.showInputDialog("Ingrese el cargo");
     
+}
+
+public void imprimirPersona(String datos){
+    super.imprimirDatosPersona(datos);
+
+    datos = "codigo de empleado: " + codigoDeEmpleado + "\n";
+    datos += "Numero de horas exttras: " + numeroDeHorasExtras + "\n";
+    datos += "Fecha de ingeso: " + fechaDeIngreso + "\n";
+    datos += "Area: " + area + "\n";
+    datos += "Cargo: " + cargo + "\n";
+
+    System.out.println(datos);
+}   
+
 }

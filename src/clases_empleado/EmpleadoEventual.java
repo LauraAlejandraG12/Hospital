@@ -1,4 +1,6 @@
-package clases.empleado;
+package clases_empleado;
+
+import javax.swing.JOptionPane;
 
 public class EmpleadoEventual extends Empleado {
 
@@ -21,11 +23,21 @@ public class EmpleadoEventual extends Empleado {
         this.fechaTerminoContrato = fechaTerminoContrato;
     }
 
-    @override
-    public void registrarDatos();
-
+    @Override
+    public void registrarDatos() {
     super.registrarDatos();
 
-    honorariosPorHora = Double.parseInt(JOptionPane.showInputDialog("Ingrese el salario mensual"));
+    honorariosPorHora = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el salario mensual"));
     fechaTerminoContrato = JOptionPane.showInputDialog("Ingrese fecha nacimiento (dd/mm/aaaa)");
+}
+
+public void imprimirDatosPersona(String datos){
+    super.imprimirDatosPersona(datos);
+
+    datos = "Honorarios por hora: " + honorariosPorHora + "\n";
+    datos += "Fecha termino del contrato: " + fechaTerminoContrato + "\n";
+
+    System.out.println(datos);
+}
+
 }

@@ -18,7 +18,7 @@ public class Persona {
         datos+="Direccion: "  + direccion + "\n";
         datos+="Ciudad de procedencia: "  + ciudadDeProcedencia + "\n";
 
-        System.out.println("datos");
+        System.out.println(datos);
         
     }
 
@@ -79,5 +79,6 @@ public class Persona {
     public void setCiudadDeProcedencia(String ciudadDeProcedencia){
         this.ciudadDeProcedencia = ciudadDeProcedencia;
     }
+
 
 }

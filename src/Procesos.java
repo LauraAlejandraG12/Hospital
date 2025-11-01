@@ -1,9 +1,17 @@
 import javax.swing.JOptionPane;
 
+import clases.ModeloDatos;
+import clases.Paciente;
+import clases_empleado.EmpleadoEventual;
+import clases_empleado.EmpleadoPlanilla;
+import clases_empleado.Medico;
+
 public class Procesos {
     
+    ModeloDatos miModeloDatos;
 
     public Procesos(){
+        miModeloDatos = new ModeloDatos();
         presentarMenuOpciones();
     }
 
@@ -21,13 +29,13 @@ public class Procesos {
         int opcion = 0;
 
         do{
-            opcion= Integer.parseInt(JOptionPane.showInputDialog("menu"));
+            opcion= Integer.parseInt(JOptionPane.showInputDialog(menu));
             switch(opcion){
                 case 1: registrarPaciente(); break;
                 case 2: registrarEmpleado(); break;
                 case 3: registrarCitaMedica(); break;
                 case 4: imprimirInformacion(); break;
-                case 5: System.out.prinltn("El sistema ha terminado!"); break;
+                case 5: System.out.println("El sistema ha terminado!"); break;
 
                 default: System.out.println("No existe el codigo, verifique nuevamente.");
                 break;
@@ -36,10 +44,76 @@ public class Procesos {
     }
 
     private void registrarPaciente(){
+        Paciente miPaciente = new Paciente();
+        miPaciente.registrarDatos();
 
+        miModeloDatos.registrarPersona(miPaciente);
     }
 
     private void registrarEmpleado(){
-        
+        String menuTipoEmpleado = "Registro de Empleado\n";
+        menuTipoEmpleado += "1. Empleado eventual\n";
+        menuTipoEmpleado += "2. Empleado por planilla\n";
+        menuTipoEmpleado += "Selecione el tipo de empleado a registrar\n";
+
+        int tipoEmpleado = Integer.parseInt(JOptionPane.showInputDialog(menuTipoEmpleado));
+
+        switch(tipoEmpleado){
+            case 1:
+
+            EmpleadoEventual miEmpleadoEventual = new EmpleadoEventual();
+            miEmpleadoEventual.registrarDatos();
+            miModeloDatos.registrarPersona(miEmpleadoEventual);
+            
+            break;
+
+            case 2:
+
+            String resp = JOptionPane.showInputDialog("Ingrese, si es un medico, de lo contrario es otro tipo de empleado");
+            if(resp.equalsIgnoreCase("si")) {
+
+            Medico miMedico = new Medico();
+            miMedico.registrarDatos();
+            miModeloDatos.registrarPersona(miMedico);
+
+        } else {
+            EmpleadoPlanilla miEmpleadoPlanilla = new EmpleadoPlanilla();
+            miModeloDatos.registrarPersona(miEmpleadoPlanilla);
+        }
+
+        break;
+
+        default: System.out.println("El tipo de empleado no es validom intentelo de nuevo");
     }
+}
+
+
+private void imprimirInformacion(){
+    String menuImprimir = "MENU IMPRESIONES\n";
+    menuImprimir += "1. Listar Paciente\n";
+    menuImprimir += "2. Listar Empleados eventuales\n";
+    menuImprimir += "3. Listar Empleados por planillas\n";
+    menuImprimir += "4. Listar medicos\n";
+    menuImprimir += "Ingrese una opcion\n";
+
+    System.out.println("**********************************************************************");
+
+    int opcion = Integer.parseInt(JOptionPane.showInputDialog(menuImprimir));
+
+    switch (opcion){
+        case 1: miModeloDatos.imprimirPacientes();
+        break;
+    case 2: miModeloDatos.imprimirEmpleadosEventuales();
+        break;
+    case 3: miModeloDatos.imprimirEmpleadosPorPlanilla();
+        break;
+    case 4: miModeloDatos.imprimirMedicos();
+        break;
+
+    default:
+        System.out.println("No existe esa opción");
+        break;
+    }
+}
+
 }
