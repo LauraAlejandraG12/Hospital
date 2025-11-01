@@ -1,5 +1,7 @@
+import javax.print.attribute.standard.JobHoldUntil;
 import javax.swing.JOptionPane;
 
+import clases.CitaMedica;
 import clases.ModeloDatos;
 import clases.Paciente;
 import clases_empleado.EmpleadoEventual;
@@ -94,6 +96,7 @@ private void imprimirInformacion(){
     menuImprimir += "2. Listar Empleados eventuales\n";
     menuImprimir += "3. Listar Empleados por planillas\n";
     menuImprimir += "4. Listar medicos\n";
+    menuImprimir += "5. Listar citas programadas" + "\n";
     menuImprimir += "Ingrese una opcion\n";
 
     System.out.println("**********************************************************************");
@@ -110,10 +113,38 @@ private void imprimirInformacion(){
     case 4: miModeloDatos.imprimirMedicos();
         break;
 
+    case 5: miModeloDatos.imprimirCitasMedicasProgramadas(); break;
+
     default:
         System.out.println("No existe esa opción");
         break;
     }
 }
+
+
+    public void registrarCitaMedica(){
+        String documentoPaciente = JOptionPane.showInputDialog("Ingrese el documento del paciente");
+
+        Paciente pacienteEncontrado = miModeloDatos.consultarPacientePorDocumento(documentoPaciente);
+
+        if(pacienteEncontrado != null){
+            String nombreMedico=JOptionPane.showInputDialog("Ingrese el nombre del medico");
+            Medico medicoEncontrado = miModeloDatos.consultarMedicoPorNombre(nombreMedico);
+
+            if(medicoEncontrado != null){
+                String servicio = JOptionPane.showInputDialog("Ingrese el servicio o motivo de la consulta");
+                String fechaConsulta = JOptionPane.showInputDialog("Ingrese la fecha de la consulta");
+                String horaConsulta = JOptionPane.showInputDialog("Ingrese la hora de consulta");
+
+                String lugar = "Lac tia sera en el consultorio " + medicoEncontrado.getNumeroDeConsultorio();
+                CitaMedica miCita = new CitaMedica(pacienteEncontrado, medicoEncontrado, servicio, fechaConsulta, horaConsulta, lugar);
+                miModeloDatos.registrarCitaMedica(miCita);
+            }else{
+                System.out.println("El medico no se encuentra registrado en el sistema.");
+            }
+        } else{
+            System.out.println("El paciente no se encuentra registrado en el sistema");
+        }
+    }
 
 }
