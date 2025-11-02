@@ -28,7 +28,7 @@ public class EmpleadoEventual extends Empleado {
     super.registrarDatos();
 
     honorariosPorHora = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el salario mensual"));
-    fechaTerminoContrato = JOptionPane.showInputDialog("Ingrese fecha nacimiento (dd/mm/aaaa)");
+    fechaTerminoContrato = JOptionPane.showInputDialog("Ingrese fecha de termino de contrato (dd/mm/aaaa)");
 }
 
 public void imprimirDatosPersona(String datos){

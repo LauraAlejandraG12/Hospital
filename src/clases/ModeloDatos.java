@@ -3,7 +3,6 @@ package clases;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import clases_empleado.*;
@@ -24,61 +23,32 @@ public class ModeloDatos {
         citasList = new ArrayList<CitaMedica>();
     }
 
-    //errores con try-catch
     public void registrarPersona(Paciente miPaciente) {
-       
-        try {
-        if (miPaciente == null) {
-            throw new NullPointerException("No se puede registrar un paciente nulo.");
-        }
-        if (pacientesMap.containsKey(miPaciente.getNumeroDeDNI())) {
-            System.out.println("Ya existe un paciente con ese documento.");
-        } else {
-            pacientesMap.put(miPaciente.getNumeroDeDNI(), miPaciente);
-            System.out.println("Paciente registrado correctamente.");
-        }
-    } catch (Exception e) {
-        System.out.println("Error al registrar el paciente: " + e.getMessage());
-    }
+        pacientesMap.put(miPaciente.getNumeroDeDNI(), miPaciente);
+        System.out.println("Se ha registrado el paciente " + miPaciente.getNombre() + " satisfactoriamente");
     }
 
     public void registrarPersona(EmpleadoPlanilla miEmpPlanilla) {
-        if (empleadosPlanillaMap.containsKey(miEmpPlanilla.getNumeroDeDNI())) {
-            System.out.println("Ya existe un empleado por planilla con el documento " + miEmpPlanilla.getNumeroDeDNI());
-        } else {
-            empleadosPlanillaMap.put(miEmpPlanilla.getNumeroDeDNI(), miEmpPlanilla);
-            System.out.println(
-                    "Se ha registrado el empleado por planilla " + miEmpPlanilla.getNombre() + " satisfactoriamente");
-        }
+        empleadosPlanillaMap.put(miEmpPlanilla.getNumeroDeDNI(), miEmpPlanilla);
+        System.out.println(
+                "Se ha registrado el empleado por planilla " + miEmpPlanilla.getNombre() + " satisfactoriamente");
     }
 
     public void registrarPersona(EmpleadoEventual miEmpEventual) {
-        if (empleadosEventualMap.containsKey(miEmpEventual.getNumeroDeDNI())) {
-            System.out.println("Ya existe un empleado eventual con el documento " + miEmpEventual.getNumeroDeDNI());
-        } else {
-            empleadosEventualMap.put(miEmpEventual.getNumeroDeDNI(), miEmpEventual);
-            System.out.println(
-                    "Se ha registrado el empleado eventual " + miEmpEventual.getNombre() + " satisfactoriamente");
-        }
+        empleadosEventualMap.put(miEmpEventual.getNumeroDeDNI(), miEmpEventual);
+        System.out
+                .println("Se ha registrado el empleado eventual " + miEmpEventual.getNombre() + " satisfactoriamente");
     }
 
     public void registrarPersona(Medico miMedico) {
-        if (medicosMap.containsKey(miMedico.getNumeroDeDNI())) {
-            System.out.println("Ya existe un médico con el documento " + miMedico.getNumeroDeDNI());
-        } else {
-            medicosMap.put(miMedico.getNumeroDeDNI(), miMedico);
-            System.out.println("Se ha registrado el médico " + miMedico.getNombre() + " satisfactoriamente");
-        }
+        medicosMap.put(miMedico.getNumeroDeDNI(), miMedico);
+        System.out.println("Se ha registrado el médico " + miMedico.getNombre() + " satisfactoriamente");
     }
 
     public void imprimirPacientes() {
         String msj = "PACIENTES REGISTRADOS\n";
-
-        if (pacientesMap.isEmpty()) {
-            System.out.println("No existen pacientes registrados.");
-        }
-
         Iterator<String> iterator = pacientesMap.keySet().iterator();
+
         while (iterator.hasNext()) {
             String clave = iterator.next();
             pacientesMap.get(clave).imprimirDatosPersona(msj);
@@ -93,86 +63,57 @@ public class ModeloDatos {
         }
     }
 
-    //imprimir medicos en planilla
-    public void imprimirEmpleadosPorPlanilla(List<Empleado> empleados, List<Medico> medicos) {
-    if (empleados.isEmpty() && medicos.isEmpty()) {
-        System.out.println("No existen empleados por planilla, ni médicos registrados.");
-        return;
-    }
+    public void imprimirEmpleadosPorPlanilla() {
+        String msj = "EMPLEADOS POR PLANILLA REGISTRADOS\n";
 
-    System.out.println(" Empleados por planilla:");
-    for (Empleado e : empleados) {
-        System.out.println(e);
-    }
+        for (EmpleadoPlanilla empleadoPlanilla : empleadosPlanillaMap.values()) {
+            empleadoPlanilla.imprimirDatosPersona(msj);
+        }
 
-    System.out.println("\n Médicos registrados:");
-    for (Medico m : medicos) {
-        System.out.println(m);
+        System.out.println("\nMÉDICOS POR PLANILLA REGISTRADOS");
+        if (medicosMap.isEmpty()) {
+            System.out.println("No hay médicos registrados.");
+        } else {
+            for (Medico m : medicosMap.values()) {
+                m.imprimirDatosPersona("Médico:");
+            }
+        }
+
     }
-}
 
     public void imprimirMedicos() {
         String msj = "MEDICOS REGISTRADOS\n";
-        // System.out.println("key = " + elemento.getKey() + ", Value = " +
-        // elemento.getValue());
-        // medicosMap.get(elemento.getKey()).imprimirDatosPersona(msj);
-        if (medicosMap.isEmpty()) {
-            System.out.println("No existen médicos registrados.");
-            return;
-        }
+
         for (Map.Entry<String, Medico> elemento : medicosMap.entrySet()) {
+            // System.out.println("key = " + elemento.getKey() + ", Value = " +
+            // elemento.getValue());
+            // medicosMap.get(elemento.getKey()).imprimirDatosPersona(msj);
             elemento.getValue().imprimirDatosPersona(msj);
         }
     }
 
-    //consulta de pacientes por documento
     public Paciente consultarPacientePorDocumento(String documentoPaciente) {
-        if (pacientesMap.isEmpty()) {
-            System.out.println("No hay pacientes registrados en el sistema.");
-            return null;
-        }
+        Paciente miPaciente = null;
 
         if (pacientesMap.containsKey(documentoPaciente)) {
-            return pacientesMap.get(documentoPaciente);
-        } else {
-            System.out.println("No se encontro el paciente con el documento: " + documentoPaciente);
-            return null;
+            miPaciente = pacientesMap.get(documentoPaciente);
         }
+
+        return miPaciente;
     }
 
-
     public Medico consultarMedicoPorNombre(String nombreMedico) {
-        if (medicosMap.isEmpty()) {
-            System.out.println("No hay medicos registrados en el sistema.");
-            return null;
-        }
-
-        if (nombreMedico == null || nombreMedico.trim().isEmpty()) {
-            System.out.println("Debe ingresar un nombre válido para realizar la búsqueda.");
-            return null;
-        }
 
         for (Medico medico : medicosMap.values()) {
             if (medico.getNombre().equalsIgnoreCase(nombreMedico)) {
-                System.out.println("Médico encontrado: " + medico.getNombre());
                 return medico;
             }
         }
 
-        System.out.println("No se encontró un médico con el nombre: " + nombreMedico);
         return null;
     }
 
     public void registrarCitaMedica(CitaMedica miCita) {
-
-        if (miCita == null) {
-            System.out.println("No se puede registrar una cita nula.");
-            return;
-        }
-
-        if (citasList == null) {
-            citasList = new ArrayList<>();
-        }
         citasList.add(miCita);
         System.out.println("Se ha registrado la cita correctamente\n");
         System.out.println(miCita.informacionCitaMedica());
